@@ -9,14 +9,16 @@ import ROOT as root
 theano.config.int_division = 'floatX'
 
 
-def evaluateZScore(probabilities,truth,prunedMass,makePlots=False):
+def evaluateZScore(probabilities,truth,weight,prunedMass,makePlots=False):
   hSig = root.TH1F("hSig","hSig",100,0.,1.)
   hBg = root.TH1F("hBg","hBg",100,0.,1.)
   for i in xrange(truth.shape[0]):
     if truth[i]==0:
-      hSig.Fill(probabilities[i,1])
+      hSig.Fill(probabilities[i,1],weight[i])
     else:
-      hBg.Fill(probabilities[i,1])
+      hBg.Fill(probabilities[i,1],weight[i])
+  zScore = -1
+  '''
   nSig = hSig.Integral()
   nBg = hBg.Integral()
   cutVal = 1
@@ -37,9 +39,11 @@ def evaluateZScore(probabilities,truth,prunedMass,makePlots=False):
   # bgPassed = float(aBg[aBg>cutVal].shape[0])
   # zScore = bgPassed/aBg.shape[0]
   print "cutVal",cutVal
+  '''
   if makePlots:
     c1 = root.TCanvas()
     fout = root.TFile("outputHists.root","RECREATE")
+    '''
     if prunedMass is not None:
       hMassSig = root.TH1F("hMassSig","hMassSig",100,0,300)
       hMassBg = root.TH1F("hMassBg","hMassBg",100,0,300)
@@ -65,6 +69,7 @@ def evaluateZScore(probabilities,truth,prunedMass,makePlots=False):
       hMassBg.SetNormFactor()
       hMassBg.Draw("same")
       c1.SaveAs("mass.pdf")
+    '''
     hBg.SetLineColor(2)
     fout.WriteTObject(hSig,"hSig")
     fout.WriteTObject(hBg,"hBg")
