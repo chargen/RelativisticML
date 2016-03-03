@@ -40,11 +40,12 @@ x = T.matrix('x')
 # listOfComputedVars = [(divide,['tau3','tau2'])]
 # nVars = len(listOfComputedVars) + len(listOfRawVars)
 
-dataPath = '/home/snarayan/cms/root/topTagging_%s/'%(jetAlgo)
+dataPath = '/home/snarayan/cms/root/monotop25ns_v2/topTagging/'
 
 suffix = '%i_%i_%.1f'%(ptlow,pthigh,etahigh)
 suffix = suffix.replace('.','p')
-with open(dataPath+"compressedBasic_%s.pkl"%(suffix),'rb') as pklFile:
+# dataPath = '/home/snarayan/cms/root/topTagging_CA15/'
+with open(dataPath+"compressedWindow_%s.pkl"%(suffix),'rb') as pklFile:
 	print 'loading data!'
 	d = pickle.load(pklFile)
 	dataX = d['dataX']
